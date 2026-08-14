@@ -218,4 +218,46 @@ void main() {
       expect(result.length, 3);
     });
   });
+
+  group('monthlyIncomeComparison', () {
+    test('empty list returns zeroed months', () {
+      final Map<DateTime, double> result = service.monthlyIncomeComparison(
+        <Income>[],
+        3,
+        anchor: DateTime(2026, 8, 15),
+      );
+      expect(result.length, 3);
+      expect(result.values.every((double v) => v == 0), isTrue);
+      expect(result.keys, contains(DateTime(2026, 8)));
+      expect(result.keys, contains(DateTime(2026, 6)));
+    });
+
+    test('single income lands in its month', () {
+      final Map<DateTime, double> result = service.monthlyIncomeComparison(
+        <Income>[_income(amount: 1000, date: DateTime(2026, 7, 10))],
+        2,
+        anchor: DateTime(2026, 8, 15),
+      );
+      expect(result[DateTime(2026, 7)], 1000);
+      expect(result[DateTime(2026, 8)], 0);
+    });
+
+    test('multiple incomes across months are summed per month, out-of-range dropped', () {
+      final List<Income> incomes = <Income>[
+        _income(id: 1, amount: 1000, date: DateTime(2026, 6, 5)),
+        _income(id: 2, amount: 500, date: DateTime(2026, 6, 20)),
+        _income(id: 3, amount: 750, date: DateTime(2026, 8, 1)),
+        _income(id: 4, amount: 999, date: DateTime(2026, 1, 1)), // out of range
+      ];
+      final Map<DateTime, double> result = service.monthlyIncomeComparison(
+        incomes,
+        3,
+        anchor: DateTime(2026, 8, 15),
+      );
+      expect(result[DateTime(2026, 6)], 1500);
+      expect(result[DateTime(2026, 7)], 0);
+      expect(result[DateTime(2026, 8)], 750);
+      expect(result.length, 3);
+    });
+  });
 }

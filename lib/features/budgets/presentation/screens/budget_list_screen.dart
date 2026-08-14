@@ -12,6 +12,7 @@ import '../../../../core/widgets/loading_view.dart';
 import '../../../../domain/entities/app_settings.dart';
 import '../../../../domain/entities/budget.dart';
 import '../../application/budget_progress.dart';
+import '../widgets/budget_progress_bar.dart';
 
 class BudgetListScreen extends ConsumerWidget {
   const BudgetListScreen({super.key});
@@ -101,14 +102,7 @@ class _BudgetCard extends ConsumerWidget {
                     ),
               ),
               const SizedBox(height: 12),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: LinearProgressIndicator(
-                  value: ratio,
-                  minHeight: 8,
-                  color: overBudget ? Theme.of(context).colorScheme.error : null,
-                ),
-              ),
+              BudgetProgressBar(ratio: ratio, overBudget: overBudget),
               const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

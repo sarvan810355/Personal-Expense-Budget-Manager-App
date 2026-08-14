@@ -97,4 +97,30 @@ class CalculationService {
     }
     return result;
   }
+
+  /// Total income for each of the [monthCount] months ending in [anchor]
+  /// (inclusive), oldest first. Keys are the first day of each month.
+  Map<DateTime, double> monthlyIncomeComparison(
+    List<Income> incomes,
+    int monthCount, {
+    DateTime? anchor,
+  }) {
+    final DateTime end = anchor ?? DateTime.now();
+    final List<DateTime> months = List<DateTime>.generate(
+      monthCount,
+      (int i) => DateTime(end.year, end.month - (monthCount - 1 - i)),
+    );
+
+    final Map<DateTime, double> result = <DateTime, double>{
+      for (final DateTime month in months) month: 0,
+    };
+
+    for (final Income income in incomes) {
+      final DateTime monthKey = DateTime(income.date.year, income.date.month);
+      if (result.containsKey(monthKey)) {
+        result[monthKey] = result[monthKey]! + income.amount;
+      }
+    }
+    return result;
+  }
 }

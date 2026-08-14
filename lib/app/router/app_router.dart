@@ -129,7 +129,8 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
         routes: <RouteBase>[
           GoRoute(
             path: 'create',
-            builder: (_, __) => const CreateEditTripScreen(),
+            builder: (_, GoRouterState state) =>
+                CreateEditTripScreen(tripId: state.extra as int?),
           ),
           GoRoute(
             path: ':id',
@@ -183,7 +184,8 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
         routes: <RouteBase>[
           GoRoute(
             path: 'add',
-            builder: (_, __) => const AddEditRecurringScreen(),
+            builder: (_, GoRouterState state) =>
+                AddEditRecurringScreen(recurringId: state.extra as int?),
           ),
         ],
       ),

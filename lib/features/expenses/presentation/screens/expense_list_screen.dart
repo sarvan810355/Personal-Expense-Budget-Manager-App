@@ -6,7 +6,6 @@ import '../../../../app/router/routes.dart';
 import '../../../../core/providers/repository_providers.dart';
 import '../../../../core/utils/currency_formatter.dart';
 import '../../../../core/utils/date_utils.dart';
-import '../../../../core/widgets/category_icon_avatar.dart';
 import '../../../../core/widgets/empty_state_view.dart';
 import '../../../../core/widgets/error_view.dart';
 import '../../../../core/widgets/loading_view.dart';
@@ -15,6 +14,7 @@ import '../../../../domain/entities/category.dart';
 import '../../../../domain/entities/expense.dart';
 import '../../application/expense_filter.dart';
 import '../widgets/expense_filter_sheet.dart';
+import '../widgets/expense_list_tile.dart';
 
 class ExpenseListScreen extends ConsumerStatefulWidget {
   const ExpenseListScreen({super.key});
@@ -116,23 +116,10 @@ class _ExpenseListScreenState extends ConsumerState<ExpenseListScreen> {
                     ),
                   ),
                   for (final Expense expense in dayExpenses)
-                    ListTile(
-                      leading: CategoryIconAvatar(
-                        iconName: categoriesById[expense.categoryId]?.icon ?? 'category',
-                        color: categoriesById[expense.categoryId]?.color ?? 0xFF757575,
-                      ),
-                      title: Text(expense.title),
-                      subtitle: Text(
-                        <String>[
-                          categoriesById[expense.categoryId]?.name ?? 'Uncategorized',
-                          if (expense.paymentMethod != null) expense.paymentMethod!,
-                        ].join(' • '),
-                      ),
-                      trailing: Text(
-                        formatter.format(expense.amount),
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      onTap: () => context.push(Routes.expenseDetailPath(expense.id)),
+                    ExpenseListTile(
+                      expense: expense,
+                      category: categoriesById[expense.categoryId],
+                      formatter: formatter,
                     ),
                 ],
               );

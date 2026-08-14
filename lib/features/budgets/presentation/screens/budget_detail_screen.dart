@@ -14,6 +14,7 @@ import '../../../../domain/entities/budget.dart';
 import '../../../../domain/entities/category.dart';
 import '../../../../domain/entities/expense.dart';
 import '../../application/budget_progress.dart';
+import '../widgets/budget_progress_bar.dart';
 
 class BudgetDetailScreen extends ConsumerWidget {
   const BudgetDetailScreen({required this.budgetId, super.key});
@@ -114,14 +115,7 @@ class _BudgetDetailBody extends ConsumerWidget {
               ),
         ),
         const SizedBox(height: 16),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(4),
-          child: LinearProgressIndicator(
-            value: ratio,
-            minHeight: 10,
-            color: overBudget ? Theme.of(context).colorScheme.error : null,
-          ),
-        ),
+        BudgetProgressBar(ratio: ratio, overBudget: overBudget, minHeight: 10),
         const SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -207,14 +201,7 @@ class _CategoryProgressTile extends ConsumerWidget {
               children: <Widget>[
                 Text(category.value?.name ?? '—'),
                 const SizedBox(height: 4),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: LinearProgressIndicator(
-                    value: ratio,
-                    minHeight: 6,
-                    color: over ? Theme.of(context).colorScheme.error : null,
-                  ),
-                ),
+                BudgetProgressBar(ratio: ratio, overBudget: over, minHeight: 6),
                 const SizedBox(height: 4),
                 Text(
                   '${formatter.format(spend.spent)} of ${formatter.format(allocated)}',
