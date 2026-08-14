@@ -34,4 +34,27 @@ class AppIcons {
   };
 
   static IconData byName(String name) => _byName[name] ?? Icons.circle;
+
+  /// All selectable icon keys, for the category/account icon picker.
+  static List<String> get allNames => _byName.keys.toList(growable: false);
 }
+
+/// Curated Material palette offered by the category/account color picker.
+const List<int> kColorPalette = <int>[
+  0xFFEF6C00,
+  0xFF1976D2,
+  0xFF8E24AA,
+  0xFF546E7A,
+  0xFFD81B60,
+  0xFFE53935,
+  0xFF3949AB,
+  0xFF6D4C41,
+  0xFF00897B,
+  0xFF5E35B1,
+  0xFFAD1457,
+  0xFFC2185B,
+  0xFF2E7D32,
+  0xFF757575,
+  0xFFF9A825,
+  0xFF0097A7,
+];

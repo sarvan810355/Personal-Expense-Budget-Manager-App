@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/local/app_database.dart';
+import '../../domain/entities/app_settings.dart';
 import '../../data/repositories/account_repository_impl.dart';
 import '../../data/repositories/budget_repository_impl.dart';
 import '../../data/repositories/category_repository_impl.dart';
@@ -72,4 +73,11 @@ final Provider<TagRepository> tagRepositoryProvider = Provider<TagRepository>(
 final Provider<SettingsRepository> settingsRepositoryProvider =
     Provider<SettingsRepository>(
   (Ref ref) => SettingsRepositoryImpl(ref.watch(appDatabaseProvider)),
+);
+
+/// Shared live view of [AppSettings], watched by any screen that needs the
+/// active currency code (account balances, expense amounts, reports, ...).
+final StreamProvider<AppSettings> appSettingsProvider =
+    StreamProvider<AppSettings>(
+  (Ref ref) => ref.watch(settingsRepositoryProvider).watchSettings(),
 );

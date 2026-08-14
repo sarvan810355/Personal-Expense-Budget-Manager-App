@@ -91,11 +91,13 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
       // Global / full-screen routes reached outside the bottom-nav shell.
       GoRoute(
         path: Routes.addExpense,
-        builder: (_, __) => const AddEditExpenseScreen(),
+        builder: (_, GoRouterState state) =>
+            AddEditExpenseScreen(expenseId: state.extra as int?),
       ),
       GoRoute(
         path: Routes.addIncome,
-        builder: (_, __) => const AddEditIncomeScreen(),
+        builder: (_, GoRouterState state) =>
+            AddEditIncomeScreen(incomeId: state.extra as int?),
       ),
       GoRoute(
         path: Routes.calendar,
@@ -151,6 +153,12 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
             path: 'add',
             builder: (_, __) => const AddEditCategoryScreen(),
           ),
+          GoRoute(
+            path: ':id/edit',
+            builder: (_, GoRouterState state) => AddEditCategoryScreen(
+              categoryId: int.parse(state.pathParameters['id']!),
+            ),
+          ),
         ],
       ),
       GoRoute(
@@ -160,6 +168,12 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
           GoRoute(
             path: 'add',
             builder: (_, __) => const AddEditAccountScreen(),
+          ),
+          GoRoute(
+            path: ':id/edit',
+            builder: (_, GoRouterState state) => AddEditAccountScreen(
+              accountId: int.parse(state.pathParameters['id']!),
+            ),
           ),
         ],
       ),
@@ -184,6 +198,12 @@ final Provider<GoRouter> appRouterProvider = Provider<GoRouter>((Ref ref) {
       GoRoute(
         path: Routes.budgetCreate,
         builder: (_, __) => const CreateEditBudgetScreen(),
+      ),
+      GoRoute(
+        path: Routes.budgetEdit,
+        builder: (_, GoRouterState state) => CreateEditBudgetScreen(
+          budgetId: int.parse(state.pathParameters['id']!),
+        ),
       ),
     ],
   );

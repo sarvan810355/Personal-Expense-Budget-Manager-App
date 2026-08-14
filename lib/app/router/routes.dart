@@ -29,17 +29,23 @@ class Routes {
   static const String tripAddExpense = '/trips/:id/add-expense';
   static const String categories = '/categories';
   static const String categoryAdd = '/categories/add';
+  static const String categoryEdit = '/categories/:id/edit';
   static const String accounts = '/accounts';
   static const String accountAdd = '/accounts/add';
+  static const String accountEdit = '/accounts/:id/edit';
   static const String recurring = '/recurring';
   static const String recurringAdd = '/recurring/add';
   static const String export = '/export';
   static const String settings = '/settings';
   static const String budgetCreate = '/budgets/create';
+  static const String budgetEdit = '/budgets/:id/edit';
 
   static String expenseDetailPath(int id) => '/expenses/$id';
   static String receiptViewerPath(int id) => '/expenses/$id/receipt';
   static String budgetDetailPath(int id) => '/budgets/$id';
+  static String budgetEditPath(int id) => '/budgets/$id/edit';
   static String tripDetailPath(int id) => '/trips/$id';
   static String tripAddExpensePath(int id) => '/trips/$id/add-expense';
+  static String categoryEditPath(int id) => '/categories/$id/edit';
+  static String accountEditPath(int id) => '/accounts/$id/edit';
 }
